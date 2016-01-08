@@ -4,7 +4,6 @@ import (
 	"appengine"
 	"appengine/urlfetch"
 
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -84,8 +83,7 @@ func (photo *Photo) fromMeta(pMeta *Meta) {
 	photo.Date = pMeta.Date
 	photo.Urls = Urls{pMeta.Url, pMeta.HDUrl}
 
-	bys := []byte(pMeta.Url)
-	photo.ReqId = base64.StdEncoding.EncodeToString(bys)
+	photo.ReqId = pMeta.Date
 }
 
 type Urls struct {
