@@ -4,7 +4,9 @@ import (
 	"appengine"
 	"appengine/urlfetch"
 
+	"encoding/base64"
 	"encoding/json"
+
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -33,16 +35,18 @@ type Photo struct {
 }
 
 func (photo *Photo) fromMeta(pMeta *Meta) {
-	photo.ReqId = "asfasf"
 	photo.Title = pMeta.Title
 	photo.Description = pMeta.Explanation
 	photo.Date = pMeta.Date
 	photo.Urls = Urls{pMeta.Url, pMeta.HDUrl}
+
+	bys := []byte(pMeta.Url)
+	photo.ReqId = base64.StdEncoding.EncodeToString(bys)
 }
 
 type Urls struct {
-	Thumb string `json:"thumb"`
-	Photo string `json:"photo"`
+	Normal string `json:"normal"`
+	HD     string `json:"hd"`
 }
 
 type Error string
