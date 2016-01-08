@@ -2,7 +2,8 @@
 
 Give list of photo of APOD from NASA.
 
-API host: http://orbital-stage-648.appspot.com
+Example host: http://orbital-stage-648.appspot.com
+
 API:
 
 /list
