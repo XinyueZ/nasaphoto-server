@@ -1,0 +1,12 @@
+application: orbital-stage-648
+#application:
+version: 1
+runtime: go
+api_version: go1
+instance_class: F4_1G
+automatic_scaling:
+  max_concurrent_requests: 500
+
+handlers:
+- url: /.*
+  script: _go_app
