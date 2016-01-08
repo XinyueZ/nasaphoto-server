@@ -6,15 +6,59 @@ import (
 
 	"encoding/base64"
 	"encoding/json"
-
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
 type Request struct {
 	ReqId string   `json:"reqId"`
 	Dates []string `json:"dates"`
+}
+
+type LastThreeRequest struct {
+	ReqId    string `json:"reqId"`
+	TimeZone string `json:"timeZone"`
+}
+
+func (request *LastThreeRequest) newRequest() (r *Request) {
+	tz := request.TimeZone
+	location, _ := time.LoadLocation(tz)
+
+	today := time.Now().In(location)
+	now := today.Format("2006-1-2")
+	beforeYesterday := today.AddDate(0, 0, -2).Format("2006-1-2")
+	yesterday := today.AddDate(0, 0, -1).Format("2006-1-2")
+	r = &Request{request.ReqId, []string{beforeYesterday, yesterday, now}}
+	return
+}
+
+type MonthRequest struct {
+	ReqId string `json:"reqId"`
+	Year  int    `json:"year"`
+	Month int    `json:"month"`
+}
+
+// daysIn returns the number of days in a month for a given year.
+func (request *MonthRequest) daysIn() int {
+	// This is equivalent to time.daysIn(m, year).
+	mon := time.Month(request.Month + 1)
+	return time.Date(request.Year, mon, 0, 0, 0, 0, 0, time.UTC).Day()
+}
+
+func (request *MonthRequest) newRequest() (r *Request) {
+	r = &Request{}
+	r.ReqId = request.ReqId
+	r.Dates = []string{}
+
+	daysIn := request.daysIn()
+	for day := 1; day <= daysIn; day++ {
+		mon := time.Month(request.Month)
+		dt := time.Date(request.Year, mon, day, 0, 0, 0, 0, time.UTC)
+		r.Dates = append(r.Dates, dt.Format("2006-1-2"))
+	}
+	return
 }
 
 type Meta struct {
@@ -57,6 +101,8 @@ func (e Error) Error() string {
 
 func init() {
 	http.HandleFunc("/list", handleList)
+	http.HandleFunc("/last_three_list", handleLastThreeList)
+	http.HandleFunc("/month_list", handleMonthList)
 }
 
 func status(w http.ResponseWriter, reqId string, status int) {
@@ -76,6 +122,8 @@ func response(w http.ResponseWriter, reqId string, photo []*Photo) {
 	fmt.Fprintf(w, `{"status":200, "reqId" : "%s", "result" : %s}`, reqId, string(json))
 }
 
+//getPhoto
+//Call API of NASA to getting photos.
 func getPhoto(r *http.Request, pDate *string, chPhoto chan *Photo) {
 	cxt := appengine.NewContext(r)
 	url := fmt.Sprintf(API_APOD, HOST, *pDate)
@@ -106,6 +154,7 @@ func getPhoto(r *http.Request, pDate *string, chPhoto chan *Photo) {
 	}
 }
 
+//showList
 func showList(w http.ResponseWriter, r *http.Request, p *Request) {
 	dates := p.Dates
 	length := len(dates)
@@ -123,6 +172,8 @@ func showList(w http.ResponseWriter, r *http.Request, p *Request) {
 	}
 }
 
+//handleList
+//Get list of photos of specified dates.
 func handleList(w http.ResponseWriter, r *http.Request) {
 	defer func() {
 		if err := recover(); err != nil {
@@ -133,9 +184,53 @@ func handleList(w http.ResponseWriter, r *http.Request) {
 	req := Request{}
 	if bytes, e := ioutil.ReadAll(r.Body); e == nil {
 		if e := json.Unmarshal(bytes, &req); e == nil {
-			// cxt := appengine.NewContext(r)
-			// cxt.Infof("dates:%v", len(req.Dates))
 			showList(w, r, &req)
+		} else {
+			s := fmt.Sprintf("%v", e)
+			status(w, s, 500)
+		}
+	} else {
+		s := fmt.Sprintf("%v", e)
+		status(w, s, 500)
+	}
+}
+
+//handleLastThreeList
+//Get list for last three days including today.
+func handleLastThreeList(w http.ResponseWriter, r *http.Request) {
+	defer func() {
+		if err := recover(); err != nil {
+			status(w, fmt.Sprintf("%v", err), 500)
+		}
+	}()
+
+	ltr := LastThreeRequest{}
+	if bytes, e := ioutil.ReadAll(r.Body); e == nil {
+		if e := json.Unmarshal(bytes, &ltr); e == nil {
+			showList(w, r, ltr.newRequest())
+		} else {
+			s := fmt.Sprintf("%v", e)
+			status(w, s, 500)
+		}
+	} else {
+		s := fmt.Sprintf("%v", e)
+		status(w, s, 500)
+	}
+}
+
+//handleMonthList
+//Get list for whole month.
+func handleMonthList(w http.ResponseWriter, r *http.Request) {
+	defer func() {
+		if err := recover(); err != nil {
+			status(w, fmt.Sprintf("%v", err), 500)
+		}
+	}()
+
+	monthRequest := MonthRequest{}
+	if bytes, e := ioutil.ReadAll(r.Body); e == nil {
+		if e := json.Unmarshal(bytes, &monthRequest); e == nil {
+			showList(w, r, monthRequest.newRequest())
 		} else {
 			s := fmt.Sprintf("%v", e)
 			status(w, s, 500)
