@@ -59,7 +59,7 @@ API:
 
 1. By different date.  
 
-Request body:
+Request body for /list:
 
 ```json
 {
@@ -77,7 +77,7 @@ Request body:
 
 2. One month.
 
-Request body:
+Request body for /month_list:
 
 ```json
 {
@@ -89,7 +89,7 @@ Request body:
 
 3. Last 3 month including today.
 
-Request body:
+Request body for /last_three_list:
 
 ```json
 {
