@@ -2,6 +2,15 @@
 
 Give list of photo of APOD from NASA.
 
+API host: http://orbital-stage-648.appspot.com
+API:
+
+/list
+
+/last_three_list
+
+/month_list
+
 # Response
 
 ```json
@@ -29,7 +38,7 @@ Give list of photo of APOD from NASA.
         "hd": "http://apod.nasa.gov/apod/image/1601/Earthrise_LRO_5634.jpg"
       }
     },
- 
+
   ......
   ]
 }
@@ -47,7 +56,7 @@ Give list of photo of APOD from NASA.
 
 # Example
 
-1. By different date.
+1. By different date.  
 
 Request body:
 
@@ -57,9 +66,9 @@ Request body:
     "dates" : [
         "2016-1-3",
         "2016-1-4",
-        "2016-1-5", 
-        "2016-1-6", 
-        "2016-1-7", 
+        "2016-1-5",
+        "2016-1-6",
+        "2016-1-7",
         "2016-1-8"
     ]
 }
@@ -89,7 +98,7 @@ Request body:
 ```
 
 
-# Liscense 
+# Liscense
 ======
 ```json
 			Copyright Xinyue Zhao
