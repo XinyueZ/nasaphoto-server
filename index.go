@@ -34,9 +34,10 @@ func (request *LastThreeRequest) newRequest() (r *Request) {
 }
 
 type MonthRequest struct {
-	ReqId string `json:"reqId"`
-	Year  int    `json:"year"`
-	Month int    `json:"month"`
+	ReqId    string `json:"reqId"`
+	Year     int    `json:"year"`
+	Month    int    `json:"month"`
+	TimeZone string `json:"timeZone"`
 }
 
 // daysIn returns the number of days in a month for a given year.
@@ -47,13 +48,25 @@ func (request *MonthRequest) daysIn() int {
 }
 
 func (request *MonthRequest) newRequest() (r *Request) {
+	tz := request.TimeZone
+	location, _ := time.LoadLocation(tz)
+	today := time.Now().In(location)
+
 	r = &Request{}
 	r.ReqId = request.ReqId
 	r.Dates = []string{}
+	if request.Year == today.Year() && request.Month > int(today.Month()) {
+		return
+	}
 
 	daysIn := request.daysIn()
+	mon := time.Month(request.Month)
 	for day := 1; day <= daysIn; day++ {
-		mon := time.Month(request.Month)
+		if request.Year == today.Year() && request.Month == int(today.Month()) {
+			if day > today.Day() {
+				return
+			}
+		}
 		dt := time.Date(request.Year, mon, day, 0, 0, 0, 0, time.UTC)
 		r.Dates = append(r.Dates, dt.Format("2006-1-2"))
 	}
