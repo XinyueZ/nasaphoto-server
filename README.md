@@ -1,6 +1,6 @@
 # nasaphoto-server
 
-Give list of photo of APOD from NASA.
+Give list of photo of APOD from NASA before 1998(inc.).
 
 Example host on GAE: http://orbital-stage-648.appspot.com
 

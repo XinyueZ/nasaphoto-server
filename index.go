@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -27,8 +29,24 @@ func (request *Request) newRequest() (r *Request) {
 
 	length := len(request.Dates)
 	for i := 0; i < length; i++ {
-		t, _ := time.Parse("2006-1-2", request.Dates[i])
+		t, err := time.Parse("2006-1-2", request.Dates[i])
 
+		//Check for invalid dateformat.
+		if err != nil || t.Year() < 1998 || t.Year() == 0 || int(t.Month()) == 0 || t.Day() <= 0 {
+			continue
+		}
+
+		//Check for invalid "day".
+		ss := strings.Split(request.Dates[i], "-")
+		if day, err := strconv.Atoi(ss[2]); err == nil {
+			if day <= 0 {
+				continue
+			}
+		} else {
+			continue
+		}
+
+		//Check for invalid in "this month".
 		if t.Year() == today.Year() && t.Month() > today.Month() {
 			continue
 		} else {
@@ -78,6 +96,13 @@ func (request *MonthRequest) newRequest() (r *Request) {
 	r = &Request{}
 	r.ReqId = request.ReqId
 	r.Dates = []string{}
+
+	//Check for invalid year, zero objects.
+	if request.Year < 1998 || request.Year == 0 || request.Month == 0 {
+		return
+	}
+
+	//Check for invalid month in this year.
 	if request.Year == today.Year() && request.Month > int(today.Month()) {
 		return
 	}
@@ -85,6 +110,7 @@ func (request *MonthRequest) newRequest() (r *Request) {
 	daysIn := request.daysIn()
 	mon := time.Month(request.Month)
 	for day := 1; day <= daysIn; day++ {
+		//Check for invalid day in "this month".
 		if request.Year == today.Year() && request.Month == int(today.Month()) {
 			if day > today.Day() {
 				return
