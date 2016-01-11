@@ -12,8 +12,31 @@ import (
 )
 
 type Request struct {
-	ReqId string   `json:"reqId"`
-	Dates []string `json:"dates"`
+	ReqId    string   `json:"reqId"`
+	Dates    []string `json:"dates"`
+	TimeZone string   `json:"timeZone"`
+}
+
+func (request *Request) newRequest() (r *Request) {
+	r = request
+	newDates := make([]string, 0)
+
+	tz := request.TimeZone
+	location, _ := time.LoadLocation(tz)
+	today := time.Now().In(location)
+
+	length := len(request.Dates)
+	for i := 0; i < length; i++ {
+		t, _ := time.Parse("2006-1-2", request.Dates[i])
+
+		if t.Year() == today.Year() && t.Month() > today.Month() {
+			continue
+		} else {
+			newDates = append(newDates, request.Dates[i])
+		}
+	}
+	r.Dates = newDates
+	return
 }
 
 type LastThreeRequest struct {
@@ -29,7 +52,7 @@ func (request *LastThreeRequest) newRequest() (r *Request) {
 	now := today.Format("2006-1-2")
 	beforeYesterday := today.AddDate(0, 0, -2).Format("2006-1-2")
 	yesterday := today.AddDate(0, 0, -1).Format("2006-1-2")
-	r = &Request{request.ReqId, []string{beforeYesterday, yesterday, now}}
+	r = &Request{request.ReqId, []string{beforeYesterday, yesterday, now}, request.TimeZone}
 	return
 }
 
@@ -195,7 +218,7 @@ func handleList(w http.ResponseWriter, r *http.Request) {
 	req := Request{}
 	if bytes, e := ioutil.ReadAll(r.Body); e == nil {
 		if e := json.Unmarshal(bytes, &req); e == nil {
-			showList(w, r, &req)
+			showList(w, r, req.newRequest())
 		} else {
 			s := fmt.Sprintf("%v", e)
 			status(w, s, 500)

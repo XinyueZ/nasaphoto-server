@@ -72,7 +72,8 @@ Request body for /list:
         "2016-1-6",
         "2016-1-7",
         "2016-1-8"
-    ]
+    ],
+    "timeZone" : "CET"
 }
 ```
 
