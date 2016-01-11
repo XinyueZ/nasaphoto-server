@@ -137,6 +137,7 @@ type Photo struct {
 	Description string `json:"description"`
 	Date        string `json:"date"`
 	Urls        Urls   `json:"urls"`
+	Type        string `json:"type"`
 }
 
 func (photo *Photo) fromMeta(pMeta *Meta) {
@@ -144,7 +145,7 @@ func (photo *Photo) fromMeta(pMeta *Meta) {
 	photo.Description = pMeta.Explanation
 	photo.Date = pMeta.Date
 	photo.Urls = Urls{pMeta.Url, pMeta.HDUrl}
-
+	photo.Type = pMeta.MediaType
 	photo.ReqId = pMeta.Date
 }
 
