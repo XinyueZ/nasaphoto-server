@@ -214,19 +214,27 @@ func getPhoto(r *http.Request, pDate *string, chPhoto chan *Photo) {
 	}
 }
 
-//showList
-func showList(w http.ResponseWriter, r *http.Request, p *Request) {
+func buildResult(r *http.Request, p *Request) (list []*Photo) {
 	dates := p.Dates
 	length := len(dates)
-	list := make([]*Photo, 0)
+	list = make([]*Photo, 0)
 	ch := make(chan *Photo, length)
 	for i := 0; i < length; i++ {
 		dt := dates[i]
 		go getPhoto(r, &dt, ch)
-		list = append(list, <-ch)
+		v := <-ch
+		if v != nil {
+			list = append(list, v)
+		}
 	}
-	if list != nil {
-		response(w, p.ReqId, list)
+	return
+}
+
+//showList
+func showList(w http.ResponseWriter, r *http.Request, p *Request) {
+	plist := buildResult(r, p)
+	if len(plist) > 0 {
+		response(w, p.ReqId, plist)
 	} else {
 		status(w, p.ReqId, 500)
 	}
