@@ -8,9 +8,9 @@ API:
 
   API| Method|Comment
 --------|--------- |---------
-   [/list](#1. By different date)|POST  | Get list of photos with dates.
-   [/month_list](# 2. One month.)|POST  |Get list of photos of a month.
-  [/last_three_list](#3. Last 3 month including today.)|POST | Get list of photos of last 3 days including today.
+   [/list](#1-by-different-date)|POST  | Get list of photos with dates.
+   [/month_list](#2-one-month)|POST  |Get list of photos of a month.
+  [/last_three_list](#3-last-3-month-including-today)|POST | Get list of photos of last 3 days including today.
 
 
 # Response
