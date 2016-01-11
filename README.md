@@ -1,7 +1,7 @@
 # nasaphoto-server(APOD+)
 
-Give list of photo of APOD(Astronomy Picture of the Day) from NASA before 1998(inc.)
-with calling different date-time scopes.
+Give list of photo of APOD(Astronomy Picture of the Day) from NASA after 1998(inc.)
+by calling different date-time scopes.
 
 # Reason for this API
 The default APOD-API doesn't provide list.
