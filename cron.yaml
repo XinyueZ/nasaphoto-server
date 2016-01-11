@@ -1,0 +1,4 @@
+cron:
+- description: Add history
+  url: /whistory
+  schedule: every 15 minutes from 0:00 to 23:59 
