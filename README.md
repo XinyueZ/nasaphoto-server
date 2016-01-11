@@ -17,6 +17,41 @@ http://orbital-stage-648.appspot.com
   [/month_list](#2-one-month)|POST  |Get list of photos of a month.
   [/last_three_list](#3-last-3-month-including-today)|POST | Get list of photos of last 3 days including today.
 
+# cron Task
+
+A auto called task(cron) for archive history in Firebase.
+
+Default period is 15 minutes, checkout [cron.yaml](https://github.com/XinyueZ/nasaphoto-server/blob/master/cron.yaml).
+
+API| Method|Comment
+--------|--------- |---------
+/whistory|GET  | Checkout [write_histroy.go](https://github.com/XinyueZ/nasaphoto-server/blob/master/write_history.go) for building history from 1998-1-1.
+
+# Config file
+
+After checkout it's still lack of a config.go
+that give some base value of whole project.
+
+```go
+package index
+
+const (
+	KEY      = "vvvvvvvvvv"
+	HOST     = "https://api.nasa.gov"
+	API_APOD = "%s/planetary/apod?date=%s&hd=true&concept_tags=false&api_key=" + KEY
+
+	FIRE_URL  = "https://xxxxxx.firebaseio.com/"
+	FIRE_AUTH = "yyyyyyy"
+)
+```
+
+Value|Comment
+--------|---------
+KEY|[Key for NASA API](https://api.nasa.gov/index.html#apply-for-an-api-key).
+HOST|Host of NASA API, must be https://api.nasa.gov
+API_APOD|[API location of  APOD](https://api.nasa.gov/api.html#apod).
+FIRE_URL | The location of Firebase to save history.
+AUTH | Auth for Firebase.
 
 # Response
 
