@@ -32,7 +32,7 @@ func (request *Request) newRequest() (r *Request) {
 		t, err := time.Parse("2006-1-2", request.Dates[i])
 
 		//Check for invalid dateformat.
-		if err != nil || t.Year() < 1998 || t.Year() == 0 || int(t.Month()) == 0 || t.Day() <= 0 {
+		if err != nil || t.Year() > today.Year() || t.Year() < 1998 || t.Year() == 0 || int(t.Month()) == 0 || t.Day() <= 0 {
 			continue
 		}
 
@@ -98,7 +98,7 @@ func (request *MonthRequest) newRequest() (r *Request) {
 	r.Dates = []string{}
 
 	//Check for invalid year, zero objects.
-	if request.Year < 1998 || request.Year == 0 || request.Month == 0 {
+	if request.Year < 1998 || request.Year > today.Year() || request.Year == 0 || request.Month == 0 {
 		return
 	}
 

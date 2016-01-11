@@ -1,15 +1,19 @@
-# nasaphoto-server
+# nasaphoto-server(APOD+)
 
-Give list of photo of APOD from NASA before 1998(inc.).
+Give list of photo of APOD(Astronomy Picture of the Day) from NASA before 1998(inc.).
 
-Example host on GAE: http://orbital-stage-648.appspot.com
+# Reason for this API
+The default APOD-API doesn't provide list.
 
-API:
+# Example on GAE
+http://orbital-stage-648.appspot.com
+
+# Specification:
 
   API| Method|Comment
 --------|--------- |---------
-   [/list](#1-by-different-date)|POST  | Get list of photos with dates.
-   [/month_list](#2-one-month)|POST  |Get list of photos of a month.
+  [/list](#1-by-different-date)|POST  | Get list of photos with dates.
+  [/month_list](#2-one-month)|POST  |Get list of photos of a month.
   [/last_three_list](#3-last-3-month-including-today)|POST | Get list of photos of last 3 days including today.
 
 
