@@ -8,9 +8,9 @@ API:
 
   API| Method|Comment
 --------|--------- |---------
-   [/list](#list)|POST  | Get list of photos with dates.
-  [/last_three_list](#last_three_list)|POST | Get list of photos of last 3 days including today.
-  [/month_list](#month_list)|POST  |Get list of photos of a month.
+   [/list](#1. By different date)|POST  | Get list of photos with dates.
+   [/month_list](# 2. One month.)|POST  |Get list of photos of a month.
+  [/last_three_list](#3. Last 3 month including today.)|POST | Get list of photos of last 3 days including today.
 
 
 # Response
@@ -58,7 +58,7 @@ API:
 
 # Example
 
-## 1. By different date.(list)
+## 1. By different date
 
 Request body for /list:
 
@@ -76,7 +76,7 @@ Request body for /list:
 }
 ```
 
-## 2. One month.(month_list)
+## 2. One month.
 
 Request body for /month_list:
 
@@ -88,7 +88,7 @@ Request body for /month_list:
 }
 ```
 
-## 3. Last 3 month including today.(last_three_list)
+## 3. Last 3 month including today.
 
 Request body for /last_three_list:
 
