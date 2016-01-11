@@ -19,7 +19,7 @@ http://orbital-stage-648.appspot.com
 
 # cron Task
 
-A auto called task(cron) for archive history in Firebase.
+An auto called task(cron) for archive history in Firebase.
 
 Default period is 15 minutes, checkout [cron.yaml](https://github.com/XinyueZ/nasaphoto-server/blob/master/cron.yaml).
 
