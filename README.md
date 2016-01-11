@@ -84,7 +84,8 @@ Request body for /month_list:
 {
     "reqId" : "sadfadsf-a345345-as456456-353456adsfa",
     "year" : 2015,
-    "month" : 1
+    "month" : 1,
+    "timeZone" : "CET"
 }
 ```
 
