@@ -30,7 +30,7 @@ API| Method|Comment
 # Config file
 
 After checkout it's still lack of a config.go
-that give some base value of whole project.
+that gives some base value of whole project(inc. key to NASA API, Firebase's Auth).
 
 ```go
 package index
