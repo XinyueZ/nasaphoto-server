@@ -2,15 +2,16 @@
 
 Give list of photo of APOD from NASA.
 
-Example host: http://orbital-stage-648.appspot.com
+Example host on GAE: http://orbital-stage-648.appspot.com
 
 API:
 
-/list
+  API| Method|Comment
+--------|--------- |---------
+   [/list](#list)|POST  | Get list of photos with dates.
+  [/last_three_list](#last_three_list)|POST | Get list of photos of last 3 days including today.
+  [/month_list](#month_list)|POST  |Get list of photos of a month.
 
-/last_three_list
-
-/month_list
 
 # Response
 
@@ -57,7 +58,7 @@ API:
 
 # Example
 
-1. By different date.  
+## 1. By different date.(list)
 
 Request body for /list:
 
@@ -75,7 +76,7 @@ Request body for /list:
 }
 ```
 
-2. One month.
+## 2. One month.(month_list)
 
 Request body for /month_list:
 
@@ -87,7 +88,7 @@ Request body for /month_list:
 }
 ```
 
-3. Last 3 month including today.
+## 3. Last 3 month including today.(last_three_list)
 
 Request body for /last_three_list:
 
