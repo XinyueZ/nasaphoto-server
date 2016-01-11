@@ -8,7 +8,7 @@ The default APOD-API doesn't provide list.
 # Example on GAE
 http://orbital-stage-648.appspot.com
 
-# Specification:
+# Specification
 
   API| Method|Comment
 --------|--------- |---------
