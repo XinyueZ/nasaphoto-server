@@ -171,7 +171,7 @@ func status(w http.ResponseWriter, reqId string, status int) {
 		reqId = "not provided"
 	}
 	w.Header().Set("Content-Type", "application/json")
-	fmt.Fprintf(w, `{"status":%d, "reqId" : "%s"}`, status, reqId)
+	fmt.Fprintf(w, `{"status":%d, "message" : "%s"}`, status, reqId)
 }
 
 func response(w http.ResponseWriter, reqId string, photo []*Photo) {
@@ -237,7 +237,7 @@ func showList(w http.ResponseWriter, r *http.Request, p *Request) {
 	if len(plist) > 0 {
 		response(w, p.ReqId, plist)
 	} else {
-		status(w, p.ReqId, 500)
+		status(w, "Empty result.", 300)
 	}
 }
 
@@ -255,12 +255,12 @@ func handleList(w http.ResponseWriter, r *http.Request) {
 		if e := json.Unmarshal(bytes, &req); e == nil {
 			showList(w, r, req.newRequest())
 		} else {
-			s := fmt.Sprintf("%v", e)
-			status(w, s, 500)
+			s := fmt.Sprintf("Body content is invalid: %v", e)
+			status(w, s, 302)
 		}
 	} else {
-		s := fmt.Sprintf("%v", e)
-		status(w, s, 500)
+		s := fmt.Sprintf("Body to the request is invalid: %v", e)
+		status(w, s, 301)
 	}
 }
 
@@ -278,12 +278,12 @@ func handleLastThreeList(w http.ResponseWriter, r *http.Request) {
 		if e := json.Unmarshal(bytes, &ltr); e == nil {
 			showList(w, r, ltr.newRequest())
 		} else {
-			s := fmt.Sprintf("%v", e)
-			status(w, s, 500)
+			s := fmt.Sprintf("Body content is invalid: %v", e)
+			status(w, s, 302)
 		}
 	} else {
-		s := fmt.Sprintf("%v", e)
-		status(w, s, 500)
+		s := fmt.Sprintf("Body to the request is invalid: %v", e)
+		status(w, s, 301)
 	}
 }
 
@@ -301,11 +301,11 @@ func handleMonthList(w http.ResponseWriter, r *http.Request) {
 		if e := json.Unmarshal(bytes, &monthRequest); e == nil {
 			showList(w, r, monthRequest.newRequest())
 		} else {
-			s := fmt.Sprintf("%v", e)
-			status(w, s, 500)
+			s := fmt.Sprintf("Body content is invalid: %v", e)
+			status(w, s, 302)
 		}
 	} else {
-		s := fmt.Sprintf("%v", e)
-		status(w, s, 500)
+		s := fmt.Sprintf("Body to the request is invalid: %v", e)
+		status(w, s, 301)
 	}
 }

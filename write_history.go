@@ -26,12 +26,12 @@ func saveAddHistoryTime(w http.ResponseWriter, r *http.Request, t map[string]int
 		if _, e := f.Push(nil); e == nil {
 			status(w, fmt.Sprintf("updated history: %v", t["lastSave"]), 200)
 		} else {
-			s := fmt.Sprintf("%v", e)
-			status(w, s, 500)
+			s := fmt.Sprintf("Firebase push error: %v", e)
+			status(w, s, 303)
 		}
 	} else {
-		s := fmt.Sprintf("%v", e)
-		status(w, s, 500)
+		s := fmt.Sprintf("Firebase update command error: %v", e)
+		status(w, s, 304)
 	}
 }
 
@@ -62,6 +62,12 @@ func getAddHistoryTime(w http.ResponseWriter, r *http.Request) (t map[string]int
 //handleWriteHistory
 //Add one history to our database.
 func handleWriteHistory(w http.ResponseWriter, r *http.Request) {
+	defer func() {
+		if err := recover(); err != nil {
+			status(w, fmt.Sprintf("%v", err), 500)
+		}
+	}()
+
 	full, value := getAddHistoryTime(w, r)
 
 	request := Request{"0", []string{value}, "CET"}

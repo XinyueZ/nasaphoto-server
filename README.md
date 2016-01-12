@@ -17,6 +17,7 @@ http://orbital-stage-648.appspot.com
   [/month_list](#2-one-month)|POST  |Get list of photos of a month.
   [/last_three_list](#3-last-3-month-including-today)|POST | Get list of photos of last 3 days including today.
 
+
 # cron Task
 
 An auto called task(cron) for archive history in Firebase.
@@ -138,6 +139,32 @@ Request body for /last_three_list:
 {
     "reqId" : "sadfadsf-a345345-as456456-353456adsfa",
     "timeZone" : "CET"
+}
+```
+
+
+# Status and Error
+
+Code|  Comment
+--------| ---------
+300|No result to request.   
+301|POST with invalid body.
+302|POST body has invalid content.
+303|Firebase push error.
+304|Firebase update command error.
+500|Critical Error.
+
+
+```json
+//Error
+{
+    "status" : 500,
+    "message" : "error for some reasons."
+}
+//Success
+{
+    "status" : 200,
+    .....
 }
 ```
 
