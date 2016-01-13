@@ -40,6 +40,7 @@ func saveAddHistoryTime(w http.ResponseWriter, r *http.Request, t map[string]int
 //Start with 1998-1-1.
 func getAddHistoryTime(w http.ResponseWriter, r *http.Request) (t map[string]interface{}, v string) {
 	fLastSave := firego.NewGAE(appengine.NewContext(r), FIRE_URL+"lastSave")
+	fLastSave.Auth(FIRE_AUTH)
 	var lastValue string
 	if err := fLastSave.Value(&lastValue); err == nil {
 		if lastValue == "" {
