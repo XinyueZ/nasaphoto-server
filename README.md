@@ -14,7 +14,7 @@ http://orbital-stage-648.appspot.com
 
   API| Method|Comment
 --------|--------- |---------
-  [/list](#1-by-different-date)|POST  | Get list of photos with dates.
+  [/list](#1-by-different-date)|POST  | Get list of photos with different single date.
   [/month_list](#2-one-month)|POST  |Get list of photos of a month.
   [/last_three_list](#3-last-3-month-including-today)|POST | Get list of photos of last 3 days including today.
 
@@ -65,7 +65,7 @@ AUTH | Auth for Firebase.
     {
       "reqId": "2016-1-3",
       "title": "A Starry Night of Iceland",
-      "description": "On some nights, the sky is the best show in town. On this night, the sky was not only the best show in town, but a composite image of the sky won an international competition for landscape astrophotography. The featured winning image was taken in 2011 over Jökulsárlón, the largest glacial lake in Iceland.  The photographer combined six exposures to capture not only two green auroral rings, but their reflections off the serene lake. Visible in the distant background sky is the band of our Milky Way Galaxy and the Andromeda galaxy. A powerful coronal mass ejection from the Sun caused auroras to be seen as far south as Wisconsin, USA.  Solar activity over the past week has resulted in auroras just over the past few days.   Follow APOD on: Facebook,  Google Plus, or Twitter",
+      "description": "On some nights, the sky is the best show in town. On this night, the sky was not only the best show in town.....",
       "date": "2016-1-3",
       "urls": {
         "normal": "http://apod.nasa.gov/apod/image/1601/aurora_vetter_1080.jpg",
@@ -75,7 +75,7 @@ AUTH | Auth for Firebase.
     {
       "reqId": "2016-1-4",
       "title": "Earthset from the Lunar Reconnaissance Orbiter",
-      "description": "On the Moon, the Earth never rises -- or sets.  If you were to sit on the surface of the Moon, you would see the Earth just hang in the sky. This is because the Moon always keeps the same side toward the Earth. Curiously, the featured image does picture the Earth setting over a lunar edge.  This was possible because the image was taken from a spacecraft orbiting the Moon - specifically the Lunar Reconnaissance Orbiter (LRO). In fact, LRO orbits the Moon so fast that, from the spacecraft, the Earth appears to set anew about every two hours. The featured image captured one such Earthset about three months ago.  By contrast, from the surface of the Earth, the Moon sets about once a day -- with the primary cause being the rotation of the Earth. LRO was launched in 2009 and, while creating a detailed three dimensional map of the Moon's surface, is also surveying the Moon for water and possible good landing spots for future astronauts.   Free APOD Lectures: Editor to speak this coming weekend in Philadelphia and New York City",
+      "description": "On the Moon, the Earth never rises -- or sets.  If you were to sit on the surface of the Moon, you would see the Earth just hang in the sky. This is because the Moon always keeps the same side toward the Earth. Curiously... ",
       "date": "2016-1-4",
       "urls": {
         "normal": "http://apod.nasa.gov/apod/image/1601/Earthrise_LRO_960.jpg",
