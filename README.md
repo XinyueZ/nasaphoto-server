@@ -7,8 +7,12 @@ by calling different date-time scopes.
 The default APOD-API doesn't provide list.
 
 # Example on GAE
-http://nasa-photo-dev.appspot.com
 http://orbital-stage-648.appspot.com
+http://nasa-photo-dev.appspot.com
+http://nasa-photo-dev2.appspot.com
+http://nasa-photo-dev3.appspot.com
+http://nasa-photo-dev4.appspot.com
+.....
 
 # Specification
 

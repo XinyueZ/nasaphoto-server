@@ -69,16 +69,21 @@ func handleWriteHistory(w http.ResponseWriter, r *http.Request) {
 		}
 	}()
 
-	full, value := getAddHistoryTime(w, r)
+	timeFull, value := getAddHistoryTime(w, r)
 
 	request := Request{"0", []string{value}, "CET"}
 	plist := buildResult(r, &request)
 	if len(plist) > 0 {
-		f := firego.NewGAE(appengine.NewContext(r), FIRE_URL+"history")
-		f.Auth(FIRE_AUTH)
 		photo := plist[0]
-		if _, e := f.Push(photo); e == nil {
-			saveAddHistoryTime(w, r, full)
+		if photo.Title != "" {
+			f := firego.NewGAE(appengine.NewContext(r), FIRE_URL+"history")
+			f.Auth(FIRE_AUTH)
+			if _, e := f.Push(photo); e == nil {
+				saveAddHistoryTime(w, r, timeFull)
+			}
+		} else {
+			//Ignore invalid photo that has "null".
+			saveAddHistoryTime(w, r, timeFull)
 		}
 	}
 }
