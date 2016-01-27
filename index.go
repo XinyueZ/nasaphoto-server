@@ -200,7 +200,11 @@ func getPhoto(r *http.Request, pDate *string, chPhoto chan *Photo) {
 				json.Unmarshal(bytes, pMeta)
 				photo := new(Photo)
 				photo.fromMeta(pMeta)
-				chPhoto <- photo
+				if photo.Title == "" {
+					chPhoto <- nil
+				} else {
+					chPhoto <- photo
+				}
 			} else {
 				cxt.Errorf("getPhoto: %v", err)
 				chPhoto <- nil
