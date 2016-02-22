@@ -1,9 +1,9 @@
 #application: nasa-photo-app #dev.xinyue
-application: orbital-stage-648 #dev.xinyue ->chopping
-#application: nasa-photo-dev #chris.de
-#application: nasa-photo-dev2 #chris.de
-#application: nasa-photo-dev3 #chris.de
-#application: nasa-photo-dev4 #chris.de
+application: orbital-stage-648 #dev.xinyue ->chopping 117
+#application: nasa-photo-dev #chris.de  100
+#application: nasa-photo-dev2 #chris.de  71
+#application: nasa-photo-dev3 #chris.de 87
+#application: nasa-photo-dev4 #chris.de 53
 
 version: 1
 runtime: go

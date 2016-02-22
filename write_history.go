@@ -78,12 +78,8 @@ func handleWriteHistory(w http.ResponseWriter, r *http.Request) {
 		if photo.Title != "" {
 			f := firego.NewGAE(appengine.NewContext(r), FIRE_URL+"history")
 			f.Auth(FIRE_AUTH)
-			if _, e := f.Push(photo); e == nil {
-				saveAddHistoryTime(w, r, timeFull)
-			}
-		} else {
-			//Ignore invalid photo that has "null".
-			saveAddHistoryTime(w, r, timeFull)
+			f.Push(photo)
 		}
 	}
+	saveAddHistoryTime(w, r, timeFull)
 }
